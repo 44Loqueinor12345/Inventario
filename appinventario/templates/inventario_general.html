@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventario General</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Inventario General</h1>
+            <a href="/" class="btn-back">← Volver al inicio</a>
+        </header>
+        
+        <main>
+            <div class="grupos-grid">
+                <h2>Seleccione un grupo para ver su inventario</h2>
+                
+                <div class="grupos-buttons">
+                    {% for grupo in grupos %}
+                    <a href="{{ url_for('inventario_grupo', grupo_nombre=grupo.nombre) }}" class="grupo-btn">
+                        <h3>{{ grupo.nombre }}</h3>
+                        <p>{{ grupo.descripcion }}</p>
+                    </a>
+                    {% endfor %}
+                    
+                    <a href="/exportar_excel?grupo=todos&tipo=todos" class="grupo-btn export-all-btn">
+                        <h3>Exportar Todo</h3>
+                        <p>Exportar inventario completo a Excel</p>
+                    </a>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventario - {{ grupo.nombre }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Inventario - Grupo {{ grupo.nombre }}</h1>
+            <div class="header-actions">
+                <a href="{{ url_for('inventario_general') }}" class="btn-back">← Volver a grupos</a>
+         <!--  <a href="/exportar_excel?grupo={{ grupo.nombre }}&tipo=todos" class="btn-export">Exportar Excel</a>-->
+            </div>
+        </header>
+        
+        <main>
+            <section class="inventory-section">
+                <h2>Dispositivos</h2>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Responsable</th>
+                                <th>Marca</th>
+                                <th>VPN</th>
+                                <th>Canal VPN</th>
+                                <th>Room</th>
+                                <th>Cuentas TikTok</th>
+                                <th>País</th>
+                                <th>Apple ID</th>
+                                <th>Foto</th>
+                                <th>Costo</th>
+                                <th>Fecha</th>
+                                <th>Comentarios</th>
+                                <th>Código Barras</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for dispositivo in dispositivos %}
+                            <tr>
+                                <td>{{ dispositivo.responsable }}</td>
+                                <td>{{ dispositivo.marca }}</td>
+                                <td>{{ dispositivo.vpn }}</td>
+                                <td>{{ dispositivo.canal_vpn }}</td>
+                                <td>{{ dispositivo.room }}</td>
+                                <td>{{ dispositivo.cuentas_tiktok }}</td>
+                                <td>{{ dispositivo.pais }}</td>
+                                <td>{{ dispositivo.apple_id }}</td>
+                                <td>{% if dispositivo.foto %}<a href="{{ dispositivo.foto }}" target="_blank">Ver foto</a>{% endif %}</td>
+                                <td>${{ dispositivo.costo }}</td>
+                                <td>{{ dispositivo.fecha_agregacion }}</td>
+                                <td>{{ dispositivo.comentarios }}</td>
+                                <td>{{ dispositivo.codigo_barras }}</td>
+                            </tr>
+                            {% else %}
+                            <tr>
+                                <td colspan="13" class="no-data">No hay dispositivos registrados en este grupo</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+            
+            <section class="inventory-section">
+                <h2>Productos de Venta</h2>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Marca</th>
+                                <th>Descripción</th>
+                                <th>Caducidad</th>
+                                <th>Costo</th>
+                                <th>Lote</th>
+                                <th>Fecha</th>
+                                <th>Código Barras</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for producto in productos_venta %}
+                            <tr>
+                                <td>{{ producto.marca }}</td>
+                                <td>{{ producto.descripcion }}</td>
+                                <td>{{ producto.caducidad }}</td>
+                                <td>${{ producto.costo }}</td>
+                                <td>{{ producto.lote }}</td>
+                                <td>{{ producto.fecha_agregacion }}</td>
+                                <td>{{ producto.codigo_barras }}</td>
+                            </tr>
+                            {% else %}
+                            <tr>
+                                <td colspan="7" class="no-data">No hay productos de venta registrados en este grupo</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+            
+            <section class="inventory-section">
+                <h2>Material General</h2>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Tipo</th>
+                                <th>Room</th>
+                                <th>Precio</th>
+                                <th>Fecha</th>
+                                <th>Código Barras</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for material in material_general %}
+                            <tr>
+                                <td>{{ material.nombre }}</td>
+                                <td>{{ material.tipo }}</td>
+                                <td>{{ material.room }}</td>
+                                <td>${{ material.precio }}</td>
+                                <td>{{ material.fecha_agregacion }}</td>
+                                <td>{{ material.codigo_barras }}</td>
+                            </tr>
+                            {% else %}
+                            <tr>
+                                <td colspan="6" class="no-data">No hay material general registrado en este grupo</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+            
+            <div class="actions-bottom">
+                <a href="{{ url_for('inventario_general') }}" class="btn-back">← Volver a grupos</a>
+                <a href="/exportar_excel?grupo={{ grupo.nombre }}&tipo=todos" class="btn-export">Exportar Excel</a>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
